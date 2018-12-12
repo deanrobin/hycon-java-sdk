@@ -63,11 +63,12 @@ public class HyconHelper {
      * @param amount coin, such as 0.01
      * @param minerFee fee, recommend 0.000000001
      * @param nonce nonce, like eth, the number of fromaddress transaction, first transaction is 1, then nonce = nonce +1
-     * @param privatekey private key, the same string like method getAddress()
+     * @param privateKey private key, the same string like method getAddress()
      * @return String[2], String[0] is hex for signed transation, and String[1] is recovery
      * @throws Exception
      */
-    public String[] signTx(String fromAddress, String toAddress, String amount, String minerFee, int nonce, String privatekey) throws Exception {
+    public String[] signTx(String fromAddress, String toAddress, String amount, String minerFee,
+                           int nonce, String privateKey) throws Exception {
         byte[] from = Utils.addressToByteArray(fromAddress);
         byte[] to = Utils.addressToByteArray(toAddress);
 
@@ -84,7 +85,7 @@ public class HyconHelper {
         byte[] newTxData = newTx.toByteArray();
         byte[] newTxHash = Utils.blake2bHash(newTxData);
 
-        ECKeyPair ecKeyPair = ECKeyPair.create(Utils.decodeHexStringToByteArray(privatekey));
+        ECKeyPair ecKeyPair = ECKeyPair.create(Utils.decodeHexStringToByteArray(privateKey));
         Sign.SignatureData newSignatureData = Sign.signMessage(newTxHash, ecKeyPair, false);
         String newSignature = Utils.encodeHexByteArrayToString(newSignatureData.getR()) +
             Utils.encodeHexByteArrayToString(newSignatureData.getS());
@@ -98,4 +99,11 @@ public class HyconHelper {
         return result;
     }
 
+    /**
+     * see method signTx
+     */
+    public String[] signTx(String fromAddress, String toAddress, String amount, int nonce, String privateKey)
+        throws Exception {
+        return signTx(fromAddress, toAddress, amount, FEE, nonce, privateKey);
+    }
 }
