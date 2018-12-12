@@ -62,9 +62,9 @@ public class HyconHelper {
      * @param toAddress transaction get coin address
      * @param amount coin, such as 0.01
      * @param minerFee fee, recommend 0.000000001
-     * @param nonce nonce, like eth, the number of fromaddress transaction, first transaction is 1, then nonce = nonce +1
+     * @param nonce nonce, like eth, the number of fromAddress transaction, first transaction is 1, then nonce = nonce +1
      * @param privateKey private key, the same string like method getAddress()
-     * @return String[2], String[0] is hex for signed transation, and String[1] is recovery
+     * @return String[2], String[0] is hex for signed transaction, and String[1] is recovery
      * @throws Exception
      */
     public String[] signTx(String fromAddress, String toAddress, String amount, String minerFee,
