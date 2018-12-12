@@ -134,6 +134,14 @@ public class HyconHelper {
         return signTx(fromAddress, toAddress, amount, FEE, nonce, privateKey);
     }
 
+    /**
+     * see method signTx
+     */
+    public static String[] signTx(String toAddress, String amount, int nonce, String privateKey)
+        throws Exception {
+        return signTx(getAddress(privateKey), toAddress, amount, FEE, nonce, privateKey);
+    }
+
     public static void main(String[] args) throws DecoderException {
         HyconHelper.getAddress();
     }
