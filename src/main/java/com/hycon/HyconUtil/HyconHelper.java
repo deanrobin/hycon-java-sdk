@@ -21,6 +21,7 @@ public class HyconHelper {
 
     /**
      * Use private key to get address.
+     * You need provide 64 length hex string
      * @param privateKey
      * @return Hyc address
      * @throws DecoderException
@@ -53,6 +54,32 @@ public class HyconHelper {
     }
 
     /**
+     * create new address without private Key,
+     *
+     * !! You need write your private key on paper and remember it.
+     *
+     * If you forget, it can't be retrieved. And you can't get your address coin
+     *
+     * @return address
+     * @throws DecoderException
+     */
+    @Deprecated
+    public static String getAddress() throws DecoderException {
+        return getAddress(getPrivateKey());
+    }
+
+    /**
+     * Can create a new private key.
+     * It's really safe.
+     * @return private key
+     */
+    public static String getPrivateKey() {
+        ECKey ecKey = new ECKey();
+        String privateKey = Utils.encodeHexByteArrayToString(ecKey.getPrivKeyBytes());
+        return privateKey;
+    }
+
+    /**
      * signed transaction, the transaction consists of these parameters
      * networkid is 'hycon', for prevent heavy mine attacks
      *
@@ -67,7 +94,7 @@ public class HyconHelper {
      * @return String[2], String[0] is hex for signed transaction, and String[1] is recovery
      * @throws Exception
      */
-    public String[] signTx(String fromAddress, String toAddress, String amount, String minerFee,
+    public static String[] signTx(String fromAddress, String toAddress, String amount, String minerFee,
                            int nonce, String privateKey) throws Exception {
         byte[] from = Utils.addressToByteArray(fromAddress);
         byte[] to = Utils.addressToByteArray(toAddress);
@@ -102,8 +129,12 @@ public class HyconHelper {
     /**
      * see method signTx
      */
-    public String[] signTx(String fromAddress, String toAddress, String amount, int nonce, String privateKey)
+    public static String[] signTx(String fromAddress, String toAddress, String amount, int nonce, String privateKey)
         throws Exception {
         return signTx(fromAddress, toAddress, amount, FEE, nonce, privateKey);
+    }
+
+    public static void main(String[] args) throws DecoderException {
+        HyconHelper.getAddress();
     }
 }
